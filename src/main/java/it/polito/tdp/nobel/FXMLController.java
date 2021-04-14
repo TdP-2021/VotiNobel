@@ -42,7 +42,7 @@ public class FXMLController {
     		Set<Esame> voti = model.calcolaSottoinsiemeEsami(numeroCrediti);
     		long end = System.currentTimeMillis();
     		
-    		if(voti == null) {
+    		if(voti == null || voti.size() == 0) {
     			txtResult.appendText("Non ho trovato soluzioni\n");
     			return ;
     		}
@@ -56,7 +56,7 @@ public class FXMLController {
 
     	} catch (NumberFormatException e) {
     		txtResult.setText("Inserire un numero di crediti > 0");
-    	}
+    	} 
     }
 
     @FXML
