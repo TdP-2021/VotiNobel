@@ -21,12 +21,16 @@ public class Model {
 		soluzioneMigliore = new HashSet<Esame>();
 		mediaSoluzioneMigliore = 0;
 		
-		//cerca1(parziale, 0, numeroCrediti);
-		cerca2(parziale, 0, numeroCrediti);
+		cerca1(parziale, 0, numeroCrediti);
+		//cerca2(parziale, 0, numeroCrediti);
 		return soluzioneMigliore;
 	}
 
-	/*COMPLESSITA': 2^N*/
+	/*
+	 * APPROCCIO 2
+	 * Genero i sottoinsiemi di PARTENZA 1 caso per volta
+	 * 		- decido, esame per esame, se debba/non debba far parte della soluzione. 
+	 */
 	private void cerca2(Set<Esame> parziale, int L, int m) {
 		//casi terminali
 		int crediti = sommaCrediti(parziale);
@@ -57,9 +61,15 @@ public class Model {
 		cerca2(parziale, L+1,m);
 	}
 
- 
-
-	/*COMPLESSITA': N!*/
+	/* 
+	 * APPROCCIO 1
+	 * Ad ogni livello (L) della ricorsione, aggiungo un esame
+	 * 		- devo decidere quale -> li provo tutti (simile agli anagrammi)
+	 * 
+	 * OTTIMIZZAZIONE: 
+	 * 		- scorro gli esami di partenza "in ordine"
+	 * 		- non considero esami che "vengono prima" (nella lista di esami di partenza) di quello che sto attualmente considerando
+	 */
 	private void cerca1(Set<Esame> parziale, int L, int m) {
 		//casi terminali
 		int crediti = sommaCrediti(parziale);
@@ -83,13 +93,23 @@ public class Model {
 		}
 		
 		//generare i sotto-problemi
-		for(Esame e : partenza) {
+		
+		/*for(Esame e : partenza) {
 			if(!parziale.contains(e)) {
 				parziale.add(e);
 				cerca1(parziale, L+1, m);
 				parziale.remove(e);
 			}
+		}*/
+		
+		for(int i = 0; i < partenza.size(); i ++) {
+			if(!parziale.contains(partenza.get(i)) && i >= L) {
+				parziale.add(partenza.get(i));
+				cerca1(parziale, L+1, m);
+				parziale.remove(partenza.get(i));
+			}
 		}
+		
 	}
 
 	public double calcolaMedia(Set<Esame> esami) {
