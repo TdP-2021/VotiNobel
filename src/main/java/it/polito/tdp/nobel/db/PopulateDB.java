@@ -9,15 +9,15 @@ public class PopulateDB {
 		EsameDAO vd = new EsameDAO();
 		
 		// Cancello dal DB tutti i voti inseriti
-		vd.cancellaTuttiEsami();
+		/*vd.cancellaTuttiEsami();
 		vd.inserisciEsame(new Esame("e1", "e1", 10, 30));
 		vd.inserisciEsame(new Esame("e2", "e2", 10, 30));
 		vd.inserisciEsame(new Esame("e3", "e3", 10, 30));
 		vd.inserisciEsame(new Esame("e4", "e4", 10, 30));
-		vd.inserisciEsame(new Esame("e5", "e5", 10, 30));
-
+		vd.inserisciEsame(new Esame("e5", "e5", 10, 30));*/
+		vd.cancellaTuttiEsami();
 		// Aggiungo al DB la seguente lista di esami:
-		/*vd.inserisciEsame(new Esame("16ACFPL", "Analisi matematica I", 10, 27));
+		vd.inserisciEsame(new Esame("16ACFPL", "Analisi matematica I", 10, 27));
 		vd.inserisciEsame(new Esame("16AHMPL", "Chimica", 8, 26));
 		vd.inserisciEsame(new Esame("12BHDPL", "Informatica", 8, 25));
 		vd.inserisciEsame(new Esame("07LKIPL", "Lingua inglese I livello", 3, 24));
@@ -40,7 +40,7 @@ public class PopulateDB {
 		vd.inserisciEsame(new Esame("01NBDPL", "Sistemi telematici", 8, 27));
 		vd.inserisciEsame(new Esame("01QYVPL", "Crediti liberi del 3° anno", 6, 22));
 		vd.inserisciEsame(new Esame("01NBEPL", "Progettazione di servizi web e reti di calcolatori", 8, 19));
-		*/
+		
 		
 		// Ottengo la lista di tutti i voti
 		System.out.println("Voti inseriti");
