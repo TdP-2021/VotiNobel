@@ -49,6 +49,8 @@ public class FXMLController {
     			
     		txtResult.appendText("TEMPO IMPIEGATO: " + (end-start) + " ms\n\n");
     		txtResult.appendText("MEDIA: " + this.model.calcolaMedia(voti) + "\n\n");
+    		txtResult.appendText("CASI TESTATI: " + this.model.getCasiTestati() + " \n\n");
+
     			
     		for(Esame e : voti) {
     			txtResult.appendText(e.toString() + "\n");

@@ -1,6 +1,7 @@
 package it.polito.tdp.nobel.model;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ public class Model {
 	private List<Esame> partenza;
 	private Set<Esame> soluzioneMigliore;
 	private double mediaSoluzioneMigliore;
+	private int casiTestati = 0;
 	
 	public Model() {
 		EsameDAO dao = new EsameDAO();
@@ -17,10 +19,10 @@ public class Model {
 	}
 	
 	public Set<Esame> calcolaSottoinsiemeEsami(int numeroCrediti) {
-		Set<Esame> parziale = new HashSet<Esame>();
+		Set<Esame> parziale = new LinkedHashSet<Esame>();
 		soluzioneMigliore = new HashSet<Esame>();
 		mediaSoluzioneMigliore = 0;
-		
+		casiTestati = 0;
 		cerca1(parziale, 0, numeroCrediti);
 		//cerca2(parziale, 0, numeroCrediti);
 		return soluzioneMigliore;
@@ -32,6 +34,8 @@ public class Model {
 	 * 		- decido, esame per esame, se debba/non debba far parte della soluzione. 
 	 */
 	private void cerca2(Set<Esame> parziale, int L, int m) {
+		casiTestati ++;
+		
 		//casi terminali
 		int crediti = sommaCrediti(parziale);
 		if(crediti > m) {
@@ -71,6 +75,9 @@ public class Model {
 	 * 		- non considero esami che "vengono prima" (nella lista di esami di partenza) di quello che sto attualmente considerando
 	 */
 	private void cerca1(Set<Esame> parziale, int L, int m) {
+		casiTestati ++;
+		System.out.println("L = " + L + "\t" + parziale);
+
 		//casi terminali
 		int crediti = sommaCrediti(parziale);
 		if(crediti > m) {
@@ -102,12 +109,16 @@ public class Model {
 			}
 		}*/
 		
+		
+		//N.B.: Non è ancora "perfetto": il controllo i>=L non è sufficiente ad evitare tutti i casi duplicati
 		for(int i = 0; i < partenza.size(); i ++) {
+	
 			if(!parziale.contains(partenza.get(i)) && i >= L) {
 				parziale.add(partenza.get(i));
 				cerca1(parziale, L+1, m);
 				parziale.remove(partenza.get(i));
 			}
+			
 		}
 		
 	}
@@ -132,6 +143,10 @@ public class Model {
 			somma += e.getCrediti();
 		
 		return somma;
+	}
+	
+	public int getCasiTestati() {
+		return this.casiTestati;
 	}
 
 }
